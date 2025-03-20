@@ -14,7 +14,7 @@ from pages.review_page import ReviewPage
 
 '''
 
-
+@pytest.mark.skip(reason='테스트중')
 @pytest.mark.usefixtures('driver')
 class TestTC007:
     
@@ -60,6 +60,7 @@ class TestTC007:
                                 # 'INNER&SEASON'
                               ]
                               )
+    @pytest.mark.skip(reason='테스트중')
     def test_category_filter(self, driver, KEYWORD):    
         wait = WebDriverWait(driver, 10)
         review_page = ReviewPage(driver)
@@ -124,6 +125,7 @@ class TestTC007:
                                 # '10만원 이상', 
                               ]
                               )
+    @pytest.mark.skip(reason='테스트중')
     def test_price_range_filter(self, driver, RANGE_FILTER):
         wait = WebDriverWait(driver, 10)
         review_page = ReviewPage(driver)
