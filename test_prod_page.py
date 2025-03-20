@@ -55,7 +55,7 @@ class TestProdPage:
             logging.exception(f"error: {e}")
             driver.save_screenshot ("제품페이지_장바구니_담기_실패_TimeoutException.png")
 
-    @pytest.mark.skip(reason="아직 테스트케이스 발동 안함")
+    #@pytest.mark.skip(reason="아직 테스트케이스 발동 안함")
     def test_change_options(self, driver: WebDriver):
         try:
             # 상품 페이지 진입
@@ -74,7 +74,7 @@ class TestProdPage:
             # 옵션 변경
             prod_page.select_option("1") # 블랙 L
             time.sleep(1)
-            prod_page.delete("아이보리 F")
+            prod_page.delete("2")
             time.sleep(1)
 
             selected_option = driver.find_element(By.XPATH, '//div/ul/li/span[@class="MK_p-name"]')
