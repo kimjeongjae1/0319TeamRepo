@@ -2,7 +2,10 @@ from random import randrange
 import time
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class ReviewPage():
@@ -11,6 +14,7 @@ class ReviewPage():
     _right_review_page_icon = "//div[@id='aside']/div[@class='right close ']/ul[@class='second']/li[4]/a/img"
     # 검색 필터 입력창
     _search_filter_input = "//input[@id='search_keyword']"
+    
     # 검색 필터 돋보기 아이콘
     _search_filter_icon = "//div[@class='price_list catedesign']/div[@class='text_box_button catedesign']/img"
     # 카테고리 선택 필터
@@ -117,22 +121,47 @@ class ReviewPage():
         self.driver.find_element(By.XPATH, xpath).clear()
 
     def sleep_random(self) -> None:
-        time.sleep((randrange(10, 20))*0.1)
+        time.sleep((randrange(10, 30))*0.01)
 
         # 메인 페이지 열기
     def move_main(self) -> None:
         self.driver.get(self.get_MAIN_URL())
+
+    def switch_to_iframe(self) -> None:
+        wait = WebDriverWait(self.driver, 10)
+        iframe = wait.until(
+            EC.presence_of_element_located(
+                (By.ID, 'review_widget1001_0')
+            )
+        )
+        self.driver.switch_to.frame(iframe)  # 돔 전환
+    
+    def switch_back_from_iframe(self) -> None:
+        self.driver.switch_to.default_content()
     
     def search_items_filtering(self, product_name:str) -> None:
+        wait = WebDriverWait(self.driver, 10)
+
+        self.sleep_random()
+
+        wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, self.get_search_filter_input())
+            )
+        )
+        
         search_input_box = self.driver.find_element(By.XPATH, self.get_search_filter_input())
         search_input_box.click()
         search_input_box.send_keys(product_name)
         search_input_box.send_keys(Keys.ENTER)
 
+        
+
     def get_find_element(self, element):
         return self.driver.find_element(element)
 
     def is_product_name_contains(self, keyword:str) -> bool:
+        
         product_names = self.driver.find_elements(By.XPATH, self.get_all_product_name())
         for p_name in product_names:
             p_name = p_name.text
