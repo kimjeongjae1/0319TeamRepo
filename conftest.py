@@ -67,6 +67,8 @@ def driver():
     chrome_options.add_argument('--disable-extensions')
     chrome_options.add_argument('--start-maximized')
     chrome_options.add_argument('--disable-popup-blocking')
+    chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.page_load_strategy = "eager"  # 빠른 페이지 로드
 
 
    
