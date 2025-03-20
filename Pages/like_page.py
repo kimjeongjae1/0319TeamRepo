@@ -22,6 +22,15 @@ class LikePage:
         alert = Alert(self.driver)
         alert.accept()
 
+    #관심 상품 등록 검증
+    def verify_likeitem(self):
+        
+
+        # "보관중인 상품 내역이 없습니다."라는 문구 확인
+        empty_message = self.driver.find_elements(By.CLASS_NAME, "tb-center")  
+
+        # 빈 상태 메시지가 존재하지 않을 경우 검증 통과
+        assert len(empty_message) == 0, "검증 실패: 관심 상품이 등록되지 않았습니다."
 
     #관심 상품 페이지 접근
     def open_wishlist(self):
@@ -36,6 +45,11 @@ class LikePage:
         wishopen = self.driver.find_element(By.XPATH,"//*[@id='ImageMapsCom-image-maps-2018-10-14-232204']/area[3]")
         wishopen.click()
 
+    #관심 상품 페이지 검증
+    def verify_wishlist_open(self):
+        current_url = self.driver.current_url
+        assert "wishlist" in current_url, "관심 상품 페이지 열기 실패: URL이 예상과 다릅니다."
+
 
     #관심 상품 삭제 
     def delete_wish(self):
@@ -48,4 +62,10 @@ class LikePage:
         alert = Alert(self.driver)
         alert.accept()
 
-    
+    def verify_wish_deleted(self):
+        # 관심 상품 페이지에서 빈 상태 메시지 확인
+        empty_message = self.driver.find_element(By.CLASS_NAME, "tb-center").text 
+
+        # 빈 상태 메시지가 "보관중인 상품 내역이 없습니다."인지 확인
+        assert "보관중인 상품 내역이 없습니다." in empty_message, "검증 실패: 관심 상품이 삭제되지 않았습니다."
+        
