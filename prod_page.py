@@ -28,12 +28,14 @@ class ProdPage:
             plus_element.click()
 
     # 옵션삭제
-    def delete(self, option: str):
-        options = self.driver.find_elements(By.XPATH, '//div/ul/li/span[@class="MK_p-name"]')
-        for opt in options:
-            print(opt.text)
-            if opt.text == option:
-                delete_btn = self.driver.find_element(By.XPATH, '//a[contains(@id, "MK_btn_del_basic")]')
+    def delete(self, option_value: str):
+        option_element = self.driver.find_element(By.XPATH, f'//select[@name="optionlist[]"]/option[@value="{option_value}"]')
+        title = option_element.get_attribute("title")
+        selected_options = self.driver.find_elements(By.XPATH, '//div/ul/li/span[@class="MK_p-name"]')
+
+        for opt in selected_options:
+            if title == opt.text:
+                delete_btn = opt.find_element(By.XPATH, './following-sibling::*[@class="MK_btn-del"]')
                 delete_btn.click()
 
     # 장바구니 담기
