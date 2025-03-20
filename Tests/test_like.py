@@ -19,12 +19,21 @@ try:
     like_page.add_likeitem()
     time.sleep(2)
 
+
     # 관심 상품 페이지 열기
     like_page.open_wishlist()
     time.sleep(2)
 
+    # 관심 상품 등록 검증
+    like_page.verify_likeitem()
+    time.sleep(2)
+
     # 관심 상품 삭제 테스트
     like_page.delete_wish()
+    time.sleep(2)
+
+    # 관심 상품 삭제 테스트
+    like_page.verify_wish_deleted()
     time.sleep(2)
 
     # 스크린샷 저장
