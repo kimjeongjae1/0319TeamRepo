@@ -3,8 +3,8 @@ import pytest
 from selenium.webdriver.support.ui import WebDriverWait as ws
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from main_page import MainPage
-from search_page import SearchPage
+from Pages.main_page import MainPage
+from Pages.search_page import SearchPage
 from selenium.webdriver.chrome.webdriver import WebDriver 
 
 @pytest.mark.usefixtures("driver")
@@ -36,7 +36,7 @@ class TestSerachPage:
             search_page= SearchPage(driver)
             search_page.set_price_range(10000,30000)
             time.sleep(2)
-
+            #가격대 설정
             prices = []
             for item in items:
                 try:
@@ -50,7 +50,7 @@ class TestSerachPage:
                 assert 10000 <= price <= 30000, f"가격 {price}원이 범위를 벗어남!"
 
             driver.save_screenshot('검색페이지-가격-성공.jpg')
-
+            # 상품 랜덤선택
             search_page.random_choice()
 
             wait.until(EC.presence_of_element_located((By.CLASS_NAME, "thumb-info")))
