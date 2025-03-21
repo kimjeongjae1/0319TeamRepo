@@ -12,27 +12,9 @@ pipeline {
             }
         }
 
-        stage('Set up Python Environment') {
-            steps {
-                sh '''
-                    # Python 3 확인
-                    python3 --version || exit 1
-
-                    # 가상환경 생성
-                    python3 -m venv $VENV_DIR
-
-                    # 가상환경 활성화 및 필요한 패키지 설치
-                    source $VENV_DIR/bin/activate
-                    pip install --upgrade pip
-                    pip install selenium pytest
-                '''
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 sh '''
-                    source $VENV_DIR/bin/activate
                     pytest --browser chrome --headless
                 '''
             }
