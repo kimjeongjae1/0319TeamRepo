@@ -15,7 +15,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                    pytest --browser chrome --headless
+                    pytest
                 '''
             }
         }
