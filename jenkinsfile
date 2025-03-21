@@ -33,7 +33,7 @@ pipeline {
             steps {
                 sh '''
                     source $VENV_DIR/bin/activate
-                    pytest
+                    pytest --browser chrome --headless
                 '''
             }
         }
