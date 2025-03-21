@@ -8,14 +8,18 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/kimjeongjae1/0319TeamRepo.git'
+                sh '''
+                git clone 'https://github.com/JCSong-89/0319TeamRepo.git'
+                cd 0319TeamRepo
+                '''
+
             }
         }
 
         stage('Run Tests') {
             steps {
                 sh '''
-                    pytest --browser chrome --headless
+                    pytest
                 '''
             }
         }
@@ -23,7 +27,9 @@ pipeline {
 
     post {
         always {
+            sh '''
             echo 'Build finished.'
+            '''
         }
     }
 }
